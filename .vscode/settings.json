@@ -1,4 +1,7 @@
 {
     "editor.acceptSuggestionOnEnter": "on",
-    "editor.defaultFormatter": "golang.go"
+    "editor.defaultFormatter": "golang.go",
+    "[jsonc]": {
+        "editor.defaultFormatter": "vscode.json-language-features"
+    }
 }
