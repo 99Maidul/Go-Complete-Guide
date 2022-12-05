@@ -1,4 +1,7 @@
 {
+    "gopls": {
+        "experimentalWorkspaceModule": true,
+    },
     "editor.acceptSuggestionOnEnter": "on",
     "editor.defaultFormatter": "golang.go",
     "[jsonc]": {
