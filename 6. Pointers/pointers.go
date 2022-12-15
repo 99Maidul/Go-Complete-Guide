@@ -7,5 +7,7 @@ func main() {
 	fmt.Println(age)
 
 	myAge := &age
-	fmt.Println(myAge)
+	fmt.Println(*myAge)
+	*myAge = 24
+	fmt.Println(age)
 }
