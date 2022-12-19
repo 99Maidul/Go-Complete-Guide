@@ -8,23 +8,44 @@ import (
 	"time"
 )
 
-var reader = bufio.NewReader(os.Stdin)
-
 func main() {
-	firstName := getUserData("Enter your first name: ")
-	lastName := getUserData("Enter your last name:")
-	birthdate := getUserData("Enter your birthdate (MM/DD/YY): ")
-	created := time.Now()
+	// Create a new bufio.Reader to read from stdin
+	reader := bufio.NewReader(os.Stdin)
 
-	// ... do something awesome with the gathered data
-	fmt.Println(firstName, lastName, birthdate, created)
+	// Prompt the user for their first name
+	firstName, err := getUserData(reader, "Enter your first name: ")
+	checkError(err)
+
+	// Prompt the user for their last name
+	lastName, err := getUserData(reader, "Enter your last name: ")
+	checkError(err)
+
+	// Prompt the user for their birthdate
+	birthdate, err := getUserData(reader, "Enter your birthdate (MM/DD/YY): ")
+	checkError(err)
+
+	// Get the current time
+	promptedAt := time.Now().Format("2006-01-02 15:04:05")
+
+	// Output the results
+	fmt.Println("First name:", firstName)
+	fmt.Println("Last name:", lastName)
+	fmt.Println("Birthdate:", birthdate)
+	fmt.Println("Prompted at:", promptedAt)
+}
+func getUserData(reader *bufio.Reader, promptText string) (string, error) {
+	fmt.Print(promptText)
+	userInput, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+
+	return strings.TrimRight(userInput, "\n"), nil
 }
 
-func getUserData(promptText string) string {
-	fmt.Print(promptText)
-	userInput, _ := reader.ReadString('\n')
-
-	cleanedInput := strings.Replace(userInput, "\n", "", -1)
-
-	return cleanedInput
+func checkError(err error) {
+	if err != nil {
+		fmt.Println("Error reading input:", err)
+		os.Exit(1)
+	}
 }
