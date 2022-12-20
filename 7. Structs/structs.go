@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -12,16 +11,41 @@ type User struct {
 	firstName  string
 	lastName   string
 	birthdate  string
-	promptedAt time.Time
+	promptedAt string
+}
+
+func (u User) String() string {
+	return fmt.Sprintf("First name: %s\nLast name: %s\nBirthdate: %s\nPrompted at: %s", u.firstName, u.lastName, u.birthdate, u.promptedAt)
+}
+
+func getUserData(reader *bufio.Reader, prompt string) (string, error) {
+	// Print the prompt
+	fmt.Print(prompt)
+
+	// Read the input
+	input, err := reader.ReadString('\n')
+	if err != nil {
+		return "", err
+	}
+
+	// Remove the trailing newline character
+	input = input[:len(input)-1]
+
+	return input, nil
+}
+
+func checkError(err error) {
+	if err != nil {
+		fmt.Println(err)
+		os.Exit(1)
+	}
 }
 
 func main() {
-
 	// Create a new bufio.Reader to read from stdin
 	reader := bufio.NewReader(os.Stdin)
 
 	// Prompt the user for their first name
-	var newUser User
 	firstName, err := getUserData(reader, "Enter your first name: ")
 	checkError(err)
 
@@ -34,30 +58,16 @@ func main() {
 	checkError(err)
 
 	// Get the current time
-	promptedAt := time.Now()
+	promptedAt := time.Now().Format("2006-01-02 15:04:05")
 
-	// Output the results
-	newUser = User{
+	// Create a new user with the collected data
+	user := User{
 		firstName:  firstName,
 		lastName:   lastName,
 		birthdate:  birthdate,
 		promptedAt: promptedAt,
 	}
-	fmt.Println(newUser)
-}
-func getUserData(reader *bufio.Reader, promptText string) (string, error) {
-	fmt.Print(promptText)
-	userInput, err := reader.ReadString('\n')
-	if err != nil {
-		return "", err
-	}
 
-	return strings.TrimRight(userInput, "\n"), nil
-}
-
-func checkError(err error) {
-	if err != nil {
-		fmt.Println("Error reading input:", err)
-		os.Exit(1)
-	}
+	// Output the user data
+	fmt.Println(user)
 }
