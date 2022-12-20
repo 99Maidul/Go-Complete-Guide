@@ -8,11 +8,20 @@ import (
 	"time"
 )
 
+type User struct {
+	firstName  string
+	lastName   string
+	birthdate  string
+	promptedAt time.Time
+}
+
 func main() {
+
 	// Create a new bufio.Reader to read from stdin
 	reader := bufio.NewReader(os.Stdin)
 
 	// Prompt the user for their first name
+	var newUser User
 	firstName, err := getUserData(reader, "Enter your first name: ")
 	checkError(err)
 
@@ -25,13 +34,16 @@ func main() {
 	checkError(err)
 
 	// Get the current time
-	promptedAt := time.Now().Format("2006-01-02 15:04:05")
+	promptedAt := time.Now()
 
 	// Output the results
-	fmt.Println("First name:", firstName)
-	fmt.Println("Last name:", lastName)
-	fmt.Println("Birthdate:", birthdate)
-	fmt.Println("Prompted at:", promptedAt)
+	newUser = User{
+		firstName:  firstName,
+		lastName:   lastName,
+		birthdate:  birthdate,
+		promptedAt: promptedAt,
+	}
+	fmt.Println(newUser)
 }
 func getUserData(reader *bufio.Reader, promptText string) (string, error) {
 	fmt.Print(promptText)
