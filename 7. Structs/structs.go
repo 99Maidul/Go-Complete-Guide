@@ -14,6 +14,17 @@ type User struct {
 	promptedAt string
 }
 
+func NewUser(fName string, lName string, bDate string) User {
+	promptedAt := time.Now().Format("2006-01-02 15:04:05")
+	user := User{
+		firstName:  fName,
+		lastName:   lName,
+		birthdate:  bDate,
+		promptedAt: promptedAt,
+	}
+	return user
+}
+
 func (u User) String() string {
 	return fmt.Sprintf("First name: %s\nLast name: %s\nBirthdate: %s\nPrompted at: %s", u.firstName, u.lastName, u.birthdate, u.promptedAt)
 }
@@ -57,16 +68,8 @@ func main() {
 	birthdate, err := getUserData(reader, "Enter your birthdate (MM/DD/YY): ")
 	checkError(err)
 
-	// Get the current time
-	promptedAt := time.Now().Format("2006-01-02 15:04:05")
-
 	// Create a new user with the collected data
-	user := User{
-		firstName:  firstName,
-		lastName:   lastName,
-		birthdate:  birthdate,
-		promptedAt: promptedAt,
-	}
+	user := NewUser(firstName, lastName, birthdate)
 
 	// Output the user data
 	fmt.Println(user)
