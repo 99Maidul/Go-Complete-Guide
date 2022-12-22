@@ -14,7 +14,7 @@ type User struct {
 	promptedAt string
 }
 
-func NewUser(fName string, lName string, bDate string) User {
+func NewUser(fName string, lName string, bDate string) *User {
 	promptedAt := time.Now().Format("2006-01-02 15:04:05")
 	user := User{
 		firstName:  fName,
@@ -22,7 +22,7 @@ func NewUser(fName string, lName string, bDate string) User {
 		birthdate:  bDate,
 		promptedAt: promptedAt,
 	}
-	return user
+	return &user
 }
 
 func (u User) String() string {
