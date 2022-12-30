@@ -15,6 +15,21 @@ type Product struct {
 	price       float64
 }
 
+func (prod *Product) store() {
+	file, err := os.OpenFile("./"+prod.id+".txt", os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		fmt.Println("Error creating file:", err)
+		return
+	}
+	defer file.Close()
+
+	// Write the product data to the file
+	content := fmt.Sprintf("ID: %v\nTitle: %v\nDescription: %v\nPrice: USD %.2f\n", prod.id, prod.title, prod.description, prod.price)
+	_, err = file.WriteString(content)
+	if err != nil {
+		fmt.Println("Error writing to file:", err)
+	}
+}
 func (prod *Product) printData() {
 	fmt.Printf("ID: %v\n", prod.id)
 	fmt.Printf("Title: %v\n", prod.title)
@@ -33,6 +48,8 @@ func getProduct() *Product {
 	reader := bufio.NewReader(os.Stdin)
 
 	idInput, _ := readUserInput(reader, "Product ID:")
+	idInput = strings.TrimSuffix(idInput, "\n")
+	idInput = strings.TrimSuffix(idInput, "\r")
 	titleInput, _ := readUserInput(reader, "Product Title:")
 	descriptionInput, _ := readUserInput(reader, "Product Description:")
 	priceInput, _ := readUserInput(reader, "Product Price:")
@@ -54,7 +71,9 @@ func readUserInput(reader *bufio.Reader, promptText string) (string, error) {
 
 	return userInput, err
 }
+
 func main() {
 	createdProudct := getProduct()
 	createdProudct.printData()
+	createdProudct.store()
 }
