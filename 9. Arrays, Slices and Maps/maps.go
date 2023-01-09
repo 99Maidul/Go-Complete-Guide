@@ -8,4 +8,7 @@ func main() {
 		"Facebook": "https://www.facebook.com",
 	}
 	fmt.Println(websites)
+	websites["Twitter"] = "https://www.twitter.com"
+	delete(websites, "Facebook")
+	fmt.Println(websites)
 }
