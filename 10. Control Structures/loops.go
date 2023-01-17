@@ -72,7 +72,7 @@ func calculateSumOfManually() {
 
 }
 func calculateSumOfList() {
-	fmt.Println("Please enter a list of numbers separated by comma:")
+	fmt.Println("Please enter a list of numbers separated by comma:xxx")
 	inputNumberList, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("Invalid Number Input")
