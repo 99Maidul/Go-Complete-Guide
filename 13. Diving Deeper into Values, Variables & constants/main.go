@@ -1,30 +1,14 @@
 package main
 
-import "fmt"
+const userName = "Maidul"
+const age = 66 / 3
 
-type person struct {
-	name string
-	age  int
-}
-
-type PersonData map[string]person
-type CustomNumber int
-
-func (number CustomNumber) pow(power int) CustomNumber {
-	result := number
-	for i := 1; i < power; i++ {
-		result = result * number
-	}
-	return CustomNumber(result)
-}
+const (
+	inputAttack   = iota
+	specialAttack = iota + 10
+	inputHeal
+)
 
 func main() {
-	var people PersonData = PersonData{
-		"p1": {"Maidul", 23},
-	}
-	fmt.Println(people)
 
-	var dummyNumber CustomNumber = 5
-	poweredNumber := dummyNumber.pow(3)
-	fmt.Println(poweredNumber)
 }
