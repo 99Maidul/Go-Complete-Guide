@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 const userName = "Maidul"
 const age = 66 / 3
 
@@ -10,5 +12,6 @@ const (
 )
 
 func main() {
-
+	fmt.Println(inputAttack, specialAttack, inputHeal)
+	fmt.Println(userName, age)
 }
