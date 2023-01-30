@@ -3,20 +3,19 @@ package main
 import "fmt"
 
 func main() {
-	numbers := []int{1, 2, 3}
+	numbers := []int{1, 10, 15}
+	sum := sumup(1, 10, 15)
+	anotherSum := sumup(1, numbers...)
 
-	transformedNumbers := transformNumbers(&numbers, func(number int) int {
-		return number * 2
-	})
-
-	fmt.Println(transformedNumbers)
-
+	fmt.Println(sum)
+	fmt.Println(anotherSum)
 }
 
-func transformNumbers(numbers *[]int, transform func(int) int) []int {
-	tNumbers := []int{}
-	for _, val := range *numbers {
-		tNumbers = append(tNumbers, transform(val))
+func sumup(startingvalue int, numbers ...int) int {
+	sum := 0
+
+	for _, value := range numbers {
+		sum += value
 	}
-	return tNumbers
+	return sum
 }
