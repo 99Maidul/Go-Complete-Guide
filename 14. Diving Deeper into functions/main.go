@@ -26,11 +26,19 @@ func getUserInput() string {
 
 func storeData(data string) {
 	file, err := os.Create("data.txt")
+
 	if err != nil {
-		fmt.Println(err)
-		return
+		fmt.Println("Storing data failed")
+		panic(err)
 	}
+	defer func() {
+		err := file.Close()
+		if err != nil {
+			fmt.Println("Closing file failed")
+		}
+	}()
+
 	file.WriteString(data)
 	fmt.Println("Data stored successfully")
-	file.Close()
+
 }
