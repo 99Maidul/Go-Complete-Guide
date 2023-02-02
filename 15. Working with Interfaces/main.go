@@ -6,6 +6,9 @@ import (
 	"io/ioutil"
 )
 
+type logger interface {
+	log()
+}
 type logData struct {
 	message  string
 	fileName string
@@ -26,11 +29,24 @@ func (text loggableString) log() {
 }
 
 func main() {
-	userLog := logData{"User logged in", "user.log.txt"}
+	userLog := &logData{"User logged in", "user.log.txt"}
 	//do more work
-	userLog.log()
+	createLog(userLog)
 
 	message := loggableString("[INFO] User Created!")
 	// do more work
-	message.log()
+	createLog(message)
+	outputValue(message)
+	outputValue(userLog)
+}
+
+func createLog(data logger) {
+	//more things to do
+	data.log()
+}
+
+func outputValue(value interface{}) {
+	val, ok := value.(string)
+	fmt.Println(val, ok)
+	fmt.Println(value)
 }
