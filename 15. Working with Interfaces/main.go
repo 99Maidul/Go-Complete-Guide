@@ -38,6 +38,20 @@ func main() {
 	createLog(message)
 	outputValue(message)
 	outputValue(userLog)
+
+	firstNumber := 5
+	secondNumber := 10.1
+	numbers := []int{1, 2, 3}
+
+	doubledFirstNumber := double(firstNumber)
+	doubledSecondNumber := double(secondNumber)
+	doubledNumbers := double(numbers)
+	doubledString := double("Test")
+
+	fmt.Println(doubledFirstNumber)
+	fmt.Println(doubledSecondNumber)
+	fmt.Println(doubledNumbers)
+	fmt.Println(doubledString)
 }
 
 func createLog(data logger) {
@@ -46,7 +60,19 @@ func createLog(data logger) {
 }
 
 func outputValue(value interface{}) {
-	val, ok := value.(string)
-	fmt.Println(val, ok)
 	fmt.Println(value)
+}
+
+func double(value interface{}) interface{} {
+	switch val := value.(type) {
+	case int:
+		return val * 2
+	case float64:
+		return val * 2
+	case []int:
+		newNumbers := append(val, val...)
+		return newNumbers
+	default:
+		return ""
+	}
 }
