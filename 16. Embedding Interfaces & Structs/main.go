@@ -14,6 +14,10 @@ type Prompter interface {
 	PromptForInput()
 }
 
+type PromptStorer interface {
+	Storer
+	Prompter
+}
 type userInputData struct {
 	input string
 }
@@ -25,7 +29,6 @@ func newUserInputData() *userInputData {
 func (usr *userInputData) PromptForInput() {
 	fmt.Print("Your Input Please: ")
 	reader := bufio.NewReader(os.Stdin)
-
 	userInput, err := reader.ReadString('\n')
 	if err != nil {
 		fmt.Println("Fetching User Input Failed")
@@ -34,7 +37,7 @@ func (usr *userInputData) PromptForInput() {
 	usr.input = userInput
 }
 
-func (usr *userInputData) store(fileName string) {
+func (usr *userInputData) Store(fileName string) {
 	file, err := os.Create(fileName)
 	if err != nil {
 		fmt.Println("Creating File Failed")
@@ -46,13 +49,13 @@ func (usr *userInputData) store(fileName string) {
 
 func main() {
 	data := newUserInputData()
-	data.PromptForInput()
-	data.store("user1.txt")
-	// handleUserInput(data)
+	// data.PromptForInput()
+	// data.Store("user1.txt")
+	handleUserInput(data)
 }
 
-// func handleUserInput(container Prompter) {
-// 	fmt.Println("Resdy to store your data!")
-// 	container.PromptForInput()
-// 	container.Store("user1.txt")
-// }
+func handleUserInput(container PromptStorer) {
+	fmt.Println("Ready to store your data!")
+	container.PromptForInput()
+	container.Store("user2.txt")
+}
